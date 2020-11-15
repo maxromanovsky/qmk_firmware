@@ -4,8 +4,8 @@
 
 The Massdrop CTRL is a TKL mechanical keyboard featuring dual USB-C connectors, an integrated Hi-Speed USB 2.0 hub, and fully customizable RGB backlighting and underlighting.
 
-Keyboard Maintainer: [Massdrop](https://github.com/massdrop)  
-Hardware Supported: Massdrop, Inc. CTRL PCBs utilizing Microchip's ATSAMD51J18A MCU and USB2422 2-Port USB 2.0 Hi-Speed Hub Controller, and ISSI's IS31FL3733 LED Drivers.  
+Keyboard Maintainer: [Massdrop](https://github.com/massdrop)
+Hardware Supported: Massdrop, Inc. CTRL PCBs utilizing Microchip's ATSAMD51J18A MCU and USB2422 2-Port USB 2.0 Hi-Speed Hub Controller, and ISSI's IS31FL3733 LED Drivers.
 Hardware Availability: [Massdrop CTRL Mechanical Keyboard](https://www.massdrop.com/buy/massdrop-ctrl-mechanical-keyboard)
 
 Make example for this keyboard (after setting up your build environment):
@@ -14,7 +14,28 @@ Make example for this keyboard (after setting up your build environment):
 
 For information on flashing this keyboard, visit the following links:
 
-[Massdrop Loader Releases](https://github.com/Massdrop/mdloader/releases/tag/0.0.1)  
+[Massdrop Loader Releases](https://github.com/Massdrop/mdloader/releases/tag/0.0.1)
 [Massdrop Loader Repository and Instructions](https://github.com/Massdrop/mdloader)
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
+
+## Max kacaur build instructions under Mac
+
+```bash
+#brew cask install gcc-arm-embedded
+#export PATH=$PATH:/Users/max/gcc-arm-none-eabi-8-2019-q3-update/bin
+brew install qmk/qmk/qmk
+export QMK_HOME=/Users/max/Documents/projects/qmk_firmware
+qmk setup
+
+#qmk compile -kb massdrop/ctrl -km default
+cd <repo_root>
+make massdrop/ctrl:default
+cp <repo_root>/massdrop_ctrl_default.bin ~/Downloads
+
+./mdloader_mac --first -U md_old.bin --addr 0x4000 --size 0x10000
+
+./mdloader_mac --first --download massdrop_ctrl_default.bin --restart
+
+./mdloader_mac --first --download md_old.bin --restart
+```
